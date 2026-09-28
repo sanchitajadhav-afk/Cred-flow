@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cred-Flow | Funding Portfolio</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f7ff;
+    color:#172554;
+}
+
+/* SIDEBAR */
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    background:linear-gradient(180deg,#172554,#4c1d95);
+    color:white;
+    padding:25px 18px;
+    box-shadow:5px 0 25px rgba(40,30,100,.15);
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    margin-bottom:35px;
+    padding-left:10px;
+}
+
+.logo span{
+    color:#67e8f9;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    margin:8px 0;
+}
+
+.menu a{
+    display:block;
+    padding:14px 15px;
+    color:#dbeafe;
+    text-decoration:none;
+    border-radius:12px;
+    transition:.3s;
+}
+
+.menu a:hover,
+.menu a.active{
+    background:rgba(255,255,255,.16);
+    color:white;
+    transform:translateX(4px);
+}
+
+.profile{
+    position:absolute;
+    bottom:25px;
+    left:18px;
+    right:18px;
+    padding:15px;
+    background:rgba(255,255,255,.1);
+    border-radius:15px;
+}
+
+.profile strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.profile small{
+    color:#cbd5e1;
+}
+
+/* MAIN */
+.main{
+    margin-left:250px;
+    padding:30px;
+}
+
+/* TOPBAR */
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topbar h1{
+    font-size:30px;
+}
+
+.topbar p{
+    color:#64748b;
+    margin-top:5px;
+}
+
+.back-btn{
+    border:none;
+    background:white;
+    color:#4c1d95;
+    padding:12px 18px;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+/* HERO */
+.hero{
+    background:linear-gradient(135deg,#4c1d95,#2563eb,#06b6d4);
+    color:white;
+    padding:30px;
+    border-radius:25px;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:25px;
+    box-shadow:0 15px 35px rgba(37,99,235,.25);
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    width:200px;
+    height:200px;
+    right:-50px;
+    top:-70px;
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+}
+
+.hero h2{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:#e0f2fe;
+    max-width:600px;
+}
+
+/* STATS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:28px;
+}
+
+.stat{
+    background:white;
+    padding:22px;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(30,41,100,.08);
+    transition:.3s;
+}
+
+.stat:hover{
+    transform:translateY(-5px);
+}
+
+.stat-icon{
+    font-size:27px;
+    margin-bottom:12px;
+}
+
+.stat h3{
+    font-size:25px;
+    margin-bottom:5px;
+}
+
+.stat p{
+    color:#64748b;
+    font-size:14px;
+}
+
+/* SECTION */
+.section{
+    background:white;
+    padding:25px;
+    border-radius:22px;
+    box-shadow:0 8px 25px rgba(30,41,100,.08);
+    margin-bottom:25px;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-header h2{
+    font-size:21px;
+}
+
+.search{
+    padding:11px 15px;
+    border:1px solid #dbeafe;
+    border-radius:10px;
+    outline:none;
+    width:230px;
+}
+
+.filter{
+    padding:11px 15px;
+    border:1px solid #dbeafe;
+    border-radius:10px;
+    margin-left:8px;
+}
+
+/* TABLE */
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:800px;
+}
+
+th{
+    text-align:left;
+    padding:15px;
+    background:#f8fafc;
+    color:#64748b;
+    font-size:13px;
+}
+
+td{
+    padding:18px 15px;
+    border-bottom:1px solid #eef2ff;
+    font-size:14px;
+}
+
+.invoice-id{
+    font-weight:bold;
+    color:#4c1d95;
+}
+
+.amount{
+    font-weight:bold;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.funded{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.processing{
+    background:#fef3c7;
+    color:#a16207;
+}
+
+.paid{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.view-btn{
+    border:none;
+    background:#eef2ff;
+    color:#4c1d95;
+    padding:9px 13px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.view-btn:hover{
+    background:#4c1d95;
+    color:white;
+}
+
+/* PORTFOLIO CARDS */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.card{
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+    padding:20px;
+    transition:.3s;
+}
+
+.card:hover{
+    box-shadow:0 10px 25px rgba(76,29,149,.12);
+    transform:translateY(-3px);
+}
+
+.card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.card-top h3{
+    color:#4c1d95;
+}
+
+.company{
+    color:#64748b;
+    font-size:13px;
+    margin-top:4px;
+}
+
+.details{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin:18px 0;
+}
+
+.detail-box{
+    background:#f8fafc;
+    padding:12px;
+    border-radius:10px;
+}
+
+.detail-box small{
+    color:#64748b;
+    display:block;
+    margin-bottom:5px;
+}
+
+.detail-box strong{
+    font-size:15px;
+}
+
+.progress-title{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:7px;
+    font-size:13px;
+}
+
+.progress{
+    height:9px;
+    background:#e2e8f0;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    background:linear-gradient(90deg,#4c1d95,#2563eb,#06b6d4);
+    border-radius:10px;
+}
+
+/* EMPTY */
+.empty{
+    text-align:center;
+    padding:45px 20px;
+    color:#64748b;
+}
+
+.empty-icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+/* TOAST */
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#172554;
+    color:white;
+    padding:15px 20px;
+    border-radius:12px;
+    opacity:0;
+    transform:translateY(20px);
+    transition:.3s;
+    pointer-events:none;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:750px){
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+    .profile{
+        display:none;
+    }
+
+    .menu{
+        display:flex;
+        flex-wrap:wrap;
+    }
+
+    .menu li{
+        margin:3px;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+    }
+
+    .search{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo">
+        Cred<span>-Flow</span> 💳
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="marketplace.html">
+                🏪 Marketplace
+            </a>
+        </li>
+
+        <li>
+            <a href="invoice-review.html">
+                🔎 Invoice Review
+            </a>
+        </li>
+
+        <li>
+            <a href="portfolio.html" class="active">
+                💼 Portfolio
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                📈 Investments
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                🔔 Notifications
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                👤 My Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                ⚙️ Settings
+            </a>
+        </li>
+
+    </ul>
+
+    <div class="profile">
+        <strong>💼 Financier Account</strong>
+        <small>Investment Partner</small>
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+
+        <div>
+            <h1>Funding Portfolio 💼</h1>
+            <p>Track your funded invoices and expected returns.</p>
+        </div>
+
+        <button class="back-btn" onclick="goMarketplace()">
+            ← Marketplace
+        </button>
+
+    </div>
+
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <h2>Your Funding Portfolio 🚀</h2>
+
+        <p>
+            Manage your invoice investments, monitor repayment progress,
+            and track your expected returns in one place.
+        </p>
+
+    </section>
+
+
+    <!-- STATS -->
+    <section class="stats">
+
+        <div class="stat">
+            <div class="stat-icon">💰</div>
+            <h3>₹2.95L</h3>
+            <p>Total Invested</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">📈</div>
+            <h3>₹14,750</h3>
+            <p>Expected Returns</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">📄</div>
+            <h3>3</h3>
+            <p>Active Invoices</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">✅</div>
+            <h3>4</h3>
+            <p>Completed Payments</p>
+        </div>
+
+    </section>
+
+
+    <!-- PORTFOLIO TABLE -->
+    <section class="section">
+
+        <div class="section-header">
+
+            <h2>📊 Investment Overview</h2>
+
+            <div>
+                <input
+                    type="text"
+                    class="search"
+                    id="searchInput"
+                    placeholder="Search invoice..."
+                    onkeyup="searchInvoices()"
+                >
+
+                <select
+                    class="filter"
+                    id="statusFilter"
+                    onchange="filterInvoices()"
+                >
+                    <option value="all">All Status</option>
+                    <option value="Funded">Funded</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Paid">Paid</option>
+                </select>
+            </div>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table id="portfolioTable">
+
+                <thead>
+                    <tr>
+                        <th>Invoice</th>
+                        <th>Business</th>
+                        <th>Invested</th>
+                        <th>Due Date</th>
+                        <th>Return</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr data-status="Funded">
+
+                        <td class="invoice-id">
+                            INV-1042
+                        </td>
+
+                        <td>
+                            ABC Industries Ltd.
+                        </td>
+
+                        <td class="amount">
+                            ₹1,00,000
+                        </td>
+
+                        <td>
+                            15 Oct 2026
+                        </td>
+
+                        <td>
+                            ₹5,000
+                        </td>
+
+                        <td>
+                            <span class="status funded">
+                                Funded
+                            </span>
+                        </td>
+
+                        <td>
+                            <button
+                                class="view-btn"
+                                onclick="viewInvoice('INV-1042')">
+                                View
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr data-status="Processing">
+
+                        <td class="invoice-id">
+                            INV-1043
+                        </td>
+
+                        <td>
+                            Tech Solutions Ltd.
+                        </td>
+
+                        <td class="amount">
+                            ₹75,000
+                        </td>
+
+                        <td>
+                            28 Oct 2026
+                        </td>
+
+                        <td>
+                            ₹3,750
+                        </td>
+
+                        <td>
+                            <span class="status processing">
+                                Processing
+                            </span>
+                        </td>
+
+                        <td>
+                            <button
+                                class="view-btn"
+                                onclick="viewInvoice('INV-1043')">
+                                View
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr data-status="Paid">
+
+                        <td class="invoice-id">
+                            INV-1038
+                        </td>
+
+                        <td>
+                            Digital Works
+                        </td>
+
+                        <td class="amount">
+                            ₹60,000
+                        </td>
+
+                        <td>
+                            30 Sep 2026
+                        </td>
+
+                        <td>
+                            ₹3,000
+                        </td>
+
+                        <td>
+                            <span class="status paid">
+                                Paid
+                            </span>
+                        </td>
+
+                        <td>
+                            <button
+                                class="view-btn"
+                                onclick="viewInvoice('INV-1038')">
+                                View
+                            </button>
+                        </td>
+
+                    </tr>
+
+
+                    <tr data-status="Funded">
+
+                        <td class="invoice-id">
+                            INV-1045
+                        </td>
+
+                        <td>
+                            Prime Retail
+                        </td>
+
+                        <td class="amount">
+                            ₹1,25,000
+                        </td>
+
+                        <td>
+                            20 Nov 2026
+                        </td>
+
+                        <td>
+                            ₹6,250
+                        </td>
+
+                        <td>
+                            <span class="status funded">
+                                Funded
+                            </span>
+                        </td>
+
+                        <td>
+                            <button
+                                class="view-btn"
+                                onclick="viewInvoice('INV-1045')">
+                                View
+                            </button>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- FUNDING PROGRESS -->
+    <section class="section">
+
+        <div class="section-header">
+            <h2>📈 Repayment Progress</h2>
+        </div>
+
+
+        <div class="cards">
+
+            <!-- CARD 1 -->
+            <div class="card">
+
+                <div class="card-top">
+
+                    <div>
+                        <h3>INV-1042</h3>
+                        <div class="company">
+                            ABC Industries Ltd.
+                        </div>
+                    </div>
+
+                    <span class="status funded">
+                        Funded
+                    </span>
+
+                </div>
+
+
+                <div class="details">
+
+                    <div class="detail-box">
+                        <small>Investment</small>
+                        <strong>₹1,00,000</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Expected Return</small>
+                        <strong>₹5,000</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Due Date</small>
+                        <strong>15 Oct 2026</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Risk Score</small>
+                        <strong>847 / 900</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="progress-title">
+                    <span>Repayment Progress</span>
+                    <strong>72%</strong>
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        style="width:72%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- CARD 2 -->
+            <div class="card">
+
+                <div class="card-top">
+
+                    <div>
+                        <h3>INV-1043</h3>
+                        <div class="company">
+                            Tech Solutions Ltd.
+                        </div>
+                    </div>
+
+                    <span class="status processing">
+                        Processing
+                    </span>
+
+                </div>
+
+
+                <div class="details">
+
+                    <div class="detail-box">
+                        <small>Investment</small>
+                        <strong>₹75,000</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Expected Return</small>
+                        <strong>₹3,750</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Due Date</small>
+                        <strong>28 Oct 2026</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Risk Score</small>
+                        <strong>821 / 900</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="progress-title">
+                    <span>Repayment Progress</span>
+                    <strong>48%</strong>
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        style="width:48%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- CARD 3 -->
+            <div class="card">
+
+                <div class="card-top">
+
+                    <div>
+                        <h3>INV-1045</h3>
+                        <div class="company">
+                            Prime Retail
+                        </div>
+                    </div>
+
+                    <span class="status funded">
+                        Funded
+                    </span>
+
+                </div>
+
+
+                <div class="details">
+
+                    <div class="detail-box">
+                        <small>Investment</small>
+                        <strong>₹1,25,000</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Expected Return</small>
+                        <strong>₹6,250</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Due Date</small>
+                        <strong>20 Nov 2026</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Risk Score</small>
+                        <strong>832 / 900</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="progress-title">
+                    <span>Repayment Progress</span>
+                    <strong>31%</strong>
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        style="width:31%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- CARD 4 -->
+            <div class="card">
+
+                <div class="card-top">
+
+                    <div>
+                        <h3>INV-1038</h3>
+                        <div class="company">
+                            Digital Works
+                        </div>
+                    </div>
+
+                    <span class="status paid">
+                        Paid
+                    </span>
+
+                </div>
+
+
+                <div class="details">
+
+                    <div class="detail-box">
+                        <small>Investment</small>
+                        <strong>₹60,000</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Return Earned</small>
+                        <strong>₹3,000</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Payment Date</small>
+                        <strong>30 Sep 2026</strong>
+                    </div>
+
+                    <div class="detail-box">
+                        <small>Risk Score</small>
+                        <strong>865 / 900</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="progress-title">
+                    <span>Repayment Progress</span>
+                    <strong>100%</strong>
+                </div>
+
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        style="width:100%">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- EMPTY SEARCH MESSAGE -->
+    <div class="empty" id="emptyMessage" style="display:none;">
+        <div class="empty-icon">🔍</div>
+        <h3>No invoices found</h3>
+        <p>Try another invoice number or status.</p>
+    </div>
+
+</main>
+
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+    Invoice details opened successfully.
+</div>
+
+
+<script>
+
+/* MARKETPLACE */
+function goMarketplace(){
+
+    window.location.href = "marketplace.html";
+
+}
+
+
+/* VIEW INVOICE */
+function viewInvoice(invoice){
+
+    showToast("Opening " + invoice + " details...");
+
+    setTimeout(function(){
+
+        window.location.href = "invoice-review.html";
+
+    },700);
+
+}
+
+
+/* SEARCH */
+function searchInvoices(){
+
+    const input =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const rows =
+        document
+        .querySelectorAll("#portfolioTable tbody tr");
+
+    let visible = 0;
+
+    rows.forEach(function(row){
+
+        const text =
+            row.innerText.toLowerCase();
+
+        if(text.includes(input)){
+
+            row.style.display = "";
+            visible++;
+
+        }else{
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+    checkEmpty(visible);
+
+}
+
+
+/* FILTER */
+function filterInvoices(){
+
+    const filter =
+        document
+        .getElementById("statusFilter")
+        .value;
+
+    const rows =
+        document
+        .querySelectorAll("#portfolioTable tbody tr");
+
+    let visible = 0;
+
+    rows.forEach(function(row){
+
+        const status =
+            row.getAttribute("data-status");
+
+        if(filter === "all" || status === filter){
+
+            row.style.display = "";
+            visible++;
+
+        }else{
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+    checkEmpty(visible);
+
+}
+
+
+/* EMPTY MESSAGE */
+function checkEmpty(count){
+
+    const empty =
+        document.getElementById("emptyMessage");
+
+    if(count === 0){
+
+        empty.style.display = "block";
+
+    }else{
+
+        empty.style.display = "none";
+
+    }
+
+}
+
+
+/* TOAST */
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.innerText = message;
+
+    toast.classList.add("show");
+
+    setTimeout(function(){
+
+        toast.classList.remove("show");
+
+    },2500);
+
+}
+
+
+/* CHECK FUNDING STATUS */
+window.onload = function(){
+
+    const fundedInvoice =
+        localStorage.getItem("fundedInvoice");
+
+    const fundingStatus =
+        localStorage.getItem("fundingStatus");
+
+    if(fundedInvoice === "INV-1042" &&
+       fundingStatus === "Funded"){
+
+        showToast(
+            "🎉 INV-1042 has been added to your funded portfolio!"
+        );
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>

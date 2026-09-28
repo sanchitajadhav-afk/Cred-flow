@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cred-Flow | Invoice Review</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    color:white;
+
+    background:
+    radial-gradient(circle at 10% 15%,#7c3aed45,transparent 30%),
+    radial-gradient(circle at 90% 80%,#06b6d435,transparent 30%),
+    linear-gradient(135deg,#06111f,#111936,#170d2d);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+
+    width:245px;
+    height:100vh;
+
+    padding:25px 18px;
+
+    background:#081225ed;
+
+    border-right:1px solid #ffffff12;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-size:22px;
+    font-weight:bold;
+
+    margin-bottom:38px;
+}
+
+.logo-icon{
+    width:43px;
+    height:43px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #06b6d4
+    );
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:13px 14px;
+
+    margin:5px 0;
+
+    color:#9da8c1;
+
+    text-decoration:none;
+
+    border-radius:12px;
+
+    transition:.3s;
+}
+
+.menu a:hover,
+.menu a.active{
+    color:white;
+
+    background:#7c3aed30;
+
+    transform:translateX(4px);
+}
+
+.profile{
+    position:absolute;
+
+    left:18px;
+    right:18px;
+    bottom:25px;
+
+    padding:15px;
+
+    border-radius:16px;
+
+    background:#ffffff08;
+
+    border:1px solid #ffffff12;
+}
+
+.profile p{
+    color:#8995b0;
+
+    font-size:11px;
+
+    margin-top:4px;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:245px;
+
+    padding:30px 38px;
+}
+
+/* TOP */
+
+.top{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+}
+
+.top h1{
+    font-size:28px;
+}
+
+.top p{
+    color:#8995b0;
+
+    margin-top:5px;
+}
+
+.back-btn{
+    padding:11px 17px;
+
+    border:1px solid #ffffff15;
+
+    border-radius:11px;
+
+    background:#ffffff09;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+/* SUMMARY */
+
+.summary{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:17px;
+
+    margin-bottom:22px;
+}
+
+.summary-card{
+    padding:20px;
+
+    border-radius:17px;
+
+    background:#ffffff08;
+
+    border:1px solid #ffffff12;
+}
+
+.summary-card p{
+    color:#8995b0;
+
+    font-size:12px;
+}
+
+.summary-card h2{
+    margin-top:8px;
+
+    font-size:21px;
+}
+
+/* MAIN GRID */
+
+.grid{
+    display:grid;
+
+    grid-template-columns:1.5fr 1fr;
+
+    gap:22px;
+}
+
+/* CARD */
+
+.card{
+    padding:25px;
+
+    border-radius:21px;
+
+    background:#ffffff08;
+
+    border:1px solid #ffffff12;
+
+    backdrop-filter:blur(15px);
+}
+
+.card h2{
+    margin-bottom:20px;
+}
+
+/* INVOICE INFO */
+
+.info-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+}
+
+.info{
+    padding:15px;
+
+    border-radius:13px;
+
+    background:#ffffff06;
+
+    border:1px solid #ffffff09;
+}
+
+.info span{
+    display:block;
+
+    color:#7f8aa5;
+
+    font-size:11px;
+}
+
+.info strong{
+    display:block;
+
+    margin-top:6px;
+
+    font-size:14px;
+}
+
+/* SCORE */
+
+.score-card{
+    text-align:center;
+}
+
+.score-circle{
+    width:190px;
+    height:190px;
+
+    margin:20px auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    radial-gradient(
+        circle,
+        #111a32 57%,
+        transparent 58%
+    ),
+    conic-gradient(
+        #8b5cf6 0 326deg,
+        #ffffff10 326deg
+    );
+
+    box-shadow:
+    0 0 45px #7c3aed35;
+}
+
+.score-number{
+    font-size:46px;
+
+    font-weight:800;
+}
+
+.score-max{
+    color:#8995b0;
+
+    font-size:12px;
+}
+
+.risk{
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    color:#4ade80;
+
+    background:#22c55e20;
+
+    font-weight:bold;
+
+    font-size:12px;
+}
+
+/* FACTORS */
+
+.factor{
+    text-align:left;
+
+    margin-top:19px;
+}
+
+.factor-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:7px;
+
+    font-size:12px;
+}
+
+.factor-top span:last-child{
+    color:#c4cce0;
+}
+
+.progress{
+    height:8px;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    background:#ffffff10;
+}
+
+.progress-bar{
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #7c3aed,
+        #06b6d4
+    );
+}
+
+/* TIMELINE */
+
+.timeline{
+    position:relative;
+
+    margin-top:10px;
+}
+
+.timeline-item{
+    display:flex;
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+.timeline-icon{
+    width:35px;
+    height:35px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#7c3aed25;
+}
+
+.timeline-text h4{
+    font-size:13px;
+}
+
+.timeline-text p{
+    color:#8995b0;
+
+    font-size:11px;
+
+    margin-top:3px;
+}
+
+/* DECISION */
+
+.decision{
+    margin-top:22px;
+
+    padding:22px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #7c3aed20,
+        #06b6d410
+    );
+
+    border:1px solid #ffffff12;
+}
+
+.decision p{
+    color:#9da8c1;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+    margin-bottom:17px;
+}
+
+.buttons{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+}
+
+.fund{
+    padding:14px;
+
+    border:none;
+
+    border-radius:11px;
+
+    color:white;
+
+    font-weight:bold;
+
+    background:
+    linear-gradient(
+        135deg,
+        #7c3aed,
+        #06b6d4
+    );
+
+    cursor:pointer;
+}
+
+.reject{
+    padding:14px;
+
+    border:1px solid #ef444455;
+
+    border-radius:11px;
+
+    color:#f87171;
+
+    background:#ef444410;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+
+    right:25px;
+    bottom:25px;
+
+    padding:16px 21px;
+
+    border-radius:14px;
+
+    background:#17213a;
+
+    border:1px solid #ffffff15;
+
+    box-shadow:0 20px 50px #00000060;
+
+    transform:translateY(100px);
+
+    opacity:0;
+
+    transition:.4s;
+
+    z-index:100;
+}
+
+.toast.show{
+    transform:translateY(0);
+
+    opacity:1;
+}
+
+.toast strong{
+    color:#4ade80;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        width:75px;
+    }
+
+    .logo span,
+    .menu span,
+    .profile{
+        display:none;
+    }
+
+    .menu a{
+        justify-content:center;
+    }
+
+    .main{
+        margin-left:75px;
+
+        padding:22px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+
+        padding:18px;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .top{
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ₹
+        </div>
+
+        Cred<span>-Flow</span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <a href="marketplace.html">
+
+            🏪
+            <span>Marketplace</span>
+
+        </a>
+
+
+        <a href="invoice-review.html"
+           class="active">
+
+            🔎
+            <span>Invoice Review</span>
+
+        </a>
+
+
+        <a href="portfolio.html">
+
+            📈
+            <span>Portfolio</span>
+
+        </a>
+
+
+        <a href="#">
+
+            💰
+            <span>Investments</span>
+
+        </a>
+
+
+        <a href="#">
+
+            🔔
+            <span>Notifications</span>
+
+        </a>
+
+
+        <a href="#">
+
+            👤
+            <span>My Profile</span>
+
+        </a>
+
+
+        <a href="#">
+
+            ⚙️
+            <span>Settings</span>
+
+        </a>
+
+    </div>
+
+
+    <div class="profile">
+
+        <b>
+            Sanchita Finance
+        </b>
+
+        <p>
+            Financier Account
+        </p>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+    <!-- TOP -->
+
+    <div class="top">
+
+        <div>
+
+            <h1>
+                Invoice Review 🔎
+            </h1>
+
+            <p>
+                Review the invoice and its Cred-Flow risk assessment.
+            </p>
+
+        </div>
+
+
+        <button
+        class="back-btn"
+        onclick="window.location.href='marketplace.html'">
+
+            ← Marketplace
+
+        </button>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+
+        <div class="summary-card">
+
+            <p>
+                Invoice Amount
+            </p>
+
+            <h2>
+                ₹1,00,000
+            </h2>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <p>
+                Cred-Flow Score
+            </p>
+
+            <h2>
+                847 / 900
+            </h2>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <p>
+                Payment Due
+            </p>
+
+            <h2>
+                15 Oct 2026
+            </h2>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <p>
+                Expected Return
+            </p>
+
+            <h2>
+                ₹5,000
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- GRID -->
+
+    <div class="grid">
+
+
+        <!-- LEFT -->
+
+        <div>
+
+
+            <!-- INVOICE DETAILS -->
+
+            <section class="card">
+
+                <h2>
+                    🧾 Invoice Information
+                </h2>
+
+
+                <div class="info-grid">
+
+
+                    <div class="info">
+
+                        <span>
+                            Invoice Number
+                        </span>
+
+                        <strong>
+                            INV-1042
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            Status
+                        </span>
+
+                        <strong style="color:#4ade80;">
+                            Verified
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            SME Business
+                        </span>
+
+                        <strong>
+                            Sanchita Enterprises
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            Buyer
+                        </span>
+
+                        <strong>
+                            ABC Industries Ltd.
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            Invoice Amount
+                        </span>
+
+                        <strong>
+                            ₹1,00,000
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            Due Date
+                        </span>
+
+                        <strong>
+                            15 Oct 2026
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            Business Vintage
+                        </span>
+
+                        <strong>
+                            6 Years
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <span>
+                            Repayment History
+                        </span>
+
+                        <strong style="color:#4ade80;">
+                            Excellent
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <br>
+
+
+            <!-- PAYMENT HISTORY -->
+
+            <section class="card">
+
+                <h2>
+                    💳 Payment History
+                </h2>
+
+
+                <div class="timeline">
+
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-icon">
+                            ✓
+                        </div>
+
+                        <div class="timeline-text">
+
+                            <h4>
+                                INV-1038 Paid
+                            </h4>
+
+                            <p>
+                                Paid on time • ₹80,000
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-icon">
+                            ✓
+                        </div>
+
+                        <div class="timeline-text">
+
+                            <h4>
+                                INV-1035 Paid
+                            </h4>
+
+                            <p>
+                                Paid on time • ₹1,20,000
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-icon">
+                            ✓
+                        </div>
+
+                        <div class="timeline-text">
+
+                            <h4>
+                                INV-1031 Paid
+                            </h4>
+
+                            <p>
+                                Paid 2 days early • ₹65,000
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-icon">
+                            ✓
+                        </div>
+
+                        <div class="timeline-text">
+
+                            <h4>
+                                INV-1027 Paid
+                            </h4>
+
+                            <p>
+                                Paid on time • ₹95,000
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div>
+
+
+            <!-- SCORE -->
+
+            <section class="card score-card">
+
+                <h2>
+                    🎯 Risk Assessment
+                </h2>
+
+
+                <div class="score-circle">
+
+                    <div class="score-number">
+                        847
+                    </div>
+
+                    <div class="score-max">
+                        out of 900
+                    </div>
+
+                </div>
+
+
+                <span class="risk">
+                    LOW RISK
+                </span>
+
+
+                <!-- FACTOR -->
+
+                <div class="factor">
+
+                    <div class="factor-top">
+
+                        <span>
+                            💰 Invoice Strength
+                        </span>
+
+                        <span>
+                            90%
+                        </span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                        class="progress-bar"
+                        style="width:90%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="factor">
+
+                    <div class="factor-top">
+
+                        <span>
+                            📅 Payment Timeline
+                        </span>
+
+                        <span>
+                            92%
+                        </span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                        class="progress-bar"
+                        style="width:92%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="factor">
+
+                    <div class="factor-top">
+
+                        <span>
+                            🏢 Business Vintage
+                        </span>
+
+                        <span>
+                            90%
+                        </span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                        class="progress-bar"
+                        style="width:90%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="factor">
+
+                    <div class="factor-top">
+
+                        <span>
+                            💳 Repayment History
+                        </span>
+
+                        <span>
+                            96%
+                        </span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                        class="progress-bar"
+                        style="width:96%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- DECISION -->
+
+            <section class="decision">
+
+                <h2>
+                    💡 Funding Decision
+                </h2>
+
+
+                <p>
+                    This is a simulated funding decision for the
+                    Cred-Flow prototype. No real money will be
+                    transferred.
+                </p>
+
+
+                <div class="buttons">
+
+                    <button
+                    class="fund"
+                    onclick="fundInvoice()">
+
+                        💰 Fund Invoice
+
+                    </button>
+
+
+                    <button
+                    class="reject"
+                    onclick="rejectInvoice()">
+
+                        ✕ Reject
+
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- TOAST -->
+
+<div
+class="toast"
+id="toast">
+
+    <strong>
+        Success! 
+    </strong>
+
+    <span id="toastMessage">
+    </span>
+
+</div>
+
+
+<script>
+
+/* FUND */
+
+function fundInvoice(){
+
+    localStorage.setItem(
+        "fundedInvoice",
+        "INV-1042"
+    );
+
+    localStorage.setItem(
+        "fundingStatus",
+        "Funded"
+    );
+
+
+    showToast(
+        "INV-1042 has been funded successfully! 💰"
+    );
+
+
+    setTimeout(function(){
+
+        window.location.href =
+        "portfolio.html";
+
+    },1800);
+
+}
+
+
+/* REJECT */
+
+function rejectInvoice(){
+
+    localStorage.setItem(
+        "fundingStatus",
+        "Rejected"
+    );
+
+
+    showToast(
+        "Invoice marked as rejected."
+    );
+
+
+    setTimeout(function(){
+
+        window.location.href =
+        "marketplace.html";
+
+    },1800);
+
+}
+
+
+/* TOAST */
+
+function showToast(message){
+
+    const toast =
+    document.getElementById("toast");
+
+
+    document.getElementById(
+        "toastMessage"
+    ).innerText=message;
+
+
+    toast.classList.add("show");
+
+
+    setTimeout(function(){
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+</script>
+
+</body>
+</html>

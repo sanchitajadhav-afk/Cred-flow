@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cred-Flow | Financier Marketplace</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    color:white;
+
+    background:
+    radial-gradient(circle at 10% 15%,#7c3aed45,transparent 30%),
+    radial-gradient(circle at 90% 80%,#06b6d435,transparent 30%),
+    linear-gradient(135deg,#06111f,#111936,#170d2d);
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+
+    width:245px;
+    height:100vh;
+
+    padding:25px 18px;
+
+    background:#081225ed;
+
+    border-right:1px solid #ffffff12;
+
+    backdrop-filter:blur(20px);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-size:22px;
+    font-weight:bold;
+
+    margin-bottom:38px;
+}
+
+.logo-icon{
+    width:43px;
+    height:43px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:
+    linear-gradient(135deg,#7c3aed,#06b6d4);
+
+    box-shadow:0 8px 25px #7c3aed50;
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+.menu-title{
+    color:#65718c;
+    font-size:11px;
+    text-transform:uppercase;
+
+    margin:20px 12px 10px;
+
+    letter-spacing:1px;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:13px 14px;
+
+    margin:5px 0;
+
+    color:#9da8c1;
+
+    text-decoration:none;
+
+    border-radius:12px;
+
+    transition:.3s;
+}
+
+.menu a:hover,
+.menu a.active{
+    color:white;
+
+    background:
+    linear-gradient(
+        90deg,
+        #7c3aed35,
+        #06b6d415
+    );
+
+    transform:translateX(4px);
+}
+
+.profile{
+    position:absolute;
+
+    bottom:25px;
+    left:18px;
+    right:18px;
+
+    padding:15px;
+
+    border-radius:17px;
+
+    background:#ffffff08;
+
+    border:1px solid #ffffff12;
+}
+
+.profile-name{
+    font-weight:bold;
+}
+
+.profile-role{
+    color:#8995b0;
+    font-size:11px;
+
+    margin-top:4px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:245px;
+
+    padding:30px 38px;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:28px;
+}
+
+.topbar h1{
+    font-size:28px;
+}
+
+.topbar p{
+    color:#8995b0;
+
+    margin-top:5px;
+}
+
+.top-actions{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.icon-btn{
+    width:43px;
+    height:43px;
+
+    border-radius:12px;
+
+    border:1px solid #ffffff12;
+
+    background:#ffffff09;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:17px;
+}
+
+.avatar{
+    width:43px;
+    height:43px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+    linear-gradient(135deg,#7c3aed,#06b6d4);
+
+    font-weight:bold;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    padding:28px;
+
+    border-radius:24px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #7c3aed45,
+        #06b6d425
+    );
+
+    border:1px solid #ffffff15;
+
+    margin-bottom:25px;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.hero:after{
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    right:-50px;
+    top:-70px;
+
+    background:#06b6d425;
+
+    filter:blur(5px);
+}
+
+.hero h2{
+    font-size:24px;
+}
+
+.hero p{
+    color:#b3bed3;
+
+    margin-top:8px;
+}
+
+.hero-stats{
+    display:flex;
+    gap:40px;
+
+    margin-top:22px;
+}
+
+.hero-stat strong{
+    font-size:20px;
+}
+
+.hero-stat span{
+    display:block;
+
+    color:#8995b0;
+
+    font-size:11px;
+
+    margin-top:3px;
+}
+
+/* ================= FILTER BAR ================= */
+
+.filter-bar{
+    display:flex;
+
+    gap:12px;
+
+    margin-bottom:25px;
+}
+
+.search-box{
+    flex:1;
+
+    padding:14px 17px;
+
+    border-radius:12px;
+
+    border:1px solid #ffffff15;
+
+    background:#ffffff09;
+
+    color:white;
+
+    outline:none;
+}
+
+.search-box:focus{
+    border-color:#8b5cf6;
+}
+
+.filter-select{
+    width:180px;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    border:1px solid #ffffff15;
+
+    background:#ffffff09;
+
+    color:white;
+
+    outline:none;
+}
+
+.filter-select option{
+    background:#111936;
+}
+
+/* ================= MARKETPLACE GRID ================= */
+
+.marketplace{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:20px;
+}
+
+/* ================= INVOICE CARD ================= */
+
+.invoice-card{
+    padding:23px;
+
+    border-radius:20px;
+
+    background:#ffffff08;
+
+    border:1px solid #ffffff12;
+
+    backdrop-filter:blur(18px);
+
+    transition:.35s;
+
+    position:relative;
+}
+
+.invoice-card:hover{
+    transform:translateY(-7px);
+
+    border-color:#8b5cf655;
+
+    box-shadow:
+    0 20px 50px #00000040;
+}
+
+.card-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.invoice-id{
+    font-weight:bold;
+}
+
+.status{
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:10px;
+
+    background:#22c55e18;
+
+    color:#4ade80;
+}
+
+.status.medium{
+    background:#f59e0b18;
+
+    color:#fbbf24;
+}
+
+.amount{
+    font-size:27px;
+
+    font-weight:800;
+
+    margin-bottom:5px;
+}
+
+.buyer{
+    color:#9ba6bf;
+
+    font-size:13px;
+
+    margin-bottom:20px;
+}
+
+/* SCORE */
+
+.score-row{
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    margin-bottom:18px;
+}
+
+.score-circle{
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    radial-gradient(
+        circle,
+        #101a32 55%,
+        transparent 56%
+    ),
+    conic-gradient(
+        #8b5cf6 0 315deg,
+        #ffffff10 315deg
+    );
+
+    font-size:13px;
+
+    font-weight:bold;
+}
+
+.score-info span{
+    display:block;
+
+    color:#8995b0;
+
+    font-size:11px;
+}
+
+.score-info strong{
+    color:#4ade80;
+
+    font-size:13px;
+}
+
+/* DETAILS */
+
+.details{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-bottom:20px;
+}
+
+.detail{
+    padding:10px;
+
+    border-radius:10px;
+
+    background:#ffffff06;
+}
+
+.detail span{
+    display:block;
+
+    color:#78839d;
+
+    font-size:10px;
+}
+
+.detail strong{
+    display:block;
+
+    margin-top:4px;
+
+    font-size:13px;
+}
+
+/* BUTTONS */
+
+.buttons{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:9px;
+}
+
+.view-btn,
+.fund-btn{
+    padding:11px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.view-btn{
+    background:#ffffff08;
+
+    border:1px solid #ffffff15;
+
+    color:white;
+}
+
+.fund-btn{
+    border:none;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #7c3aed,
+        #06b6d4
+    );
+}
+
+.view-btn:hover,
+.fund-btn:hover{
+    transform:translateY(-2px);
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#000000aa;
+
+    backdrop-filter:blur(8px);
+
+    z-index:100;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:450px;
+
+    max-width:90%;
+
+    padding:28px;
+
+    border-radius:23px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #141d38,
+        #11182f
+    );
+
+    border:1px solid #ffffff18;
+
+    box-shadow:0 30px 90px #00000070;
+
+    animation:popup .3s ease;
+}
+
+@keyframes popup{
+
+    from{
+        opacity:0;
+        transform:scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+.modal-header{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.close{
+    border:none;
+
+    background:#ffffff10;
+
+    color:white;
+
+    width:35px;
+    height:35px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+.modal-row{
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:13px 0;
+
+    border-bottom:1px solid #ffffff0d;
+
+    font-size:13px;
+}
+
+.modal-row span{
+    color:#8995b0;
+}
+
+.modal-fund{
+    width:100%;
+
+    margin-top:20px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    color:white;
+
+    font-weight:bold;
+
+    background:
+    linear-gradient(
+        135deg,
+        #7c3aed,
+        #06b6d4
+    );
+
+    cursor:pointer;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+
+    right:25px;
+    bottom:25px;
+
+    padding:16px 21px;
+
+    border-radius:14px;
+
+    background:#17213a;
+
+    border:1px solid #ffffff15;
+
+    box-shadow:0 20px 50px #00000060;
+
+    transform:translateY(100px);
+
+    opacity:0;
+
+    transition:.4s;
+
+    z-index:200;
+}
+
+.toast.show{
+    transform:translateY(0);
+
+    opacity:1;
+}
+
+.toast strong{
+    color:#4ade80;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+
+    .marketplace{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        width:75px;
+    }
+
+    .logo span,
+    .menu span,
+    .menu-title,
+    .profile{
+        display:none;
+    }
+
+    .menu a{
+        justify-content:center;
+    }
+
+    .main{
+        margin-left:75px;
+
+        padding:25px;
+    }
+
+    .marketplace{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+
+        padding:18px;
+    }
+
+    .filter-bar{
+        flex-direction:column;
+    }
+
+    .filter-select{
+        width:100%;
+    }
+
+    .hero-stats{
+        flex-wrap:wrap;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ₹
+        </div>
+
+        Cred<span>-Flow</span>
+
+    </div>
+
+
+    <div class="menu-title">
+        FINANCIER
+    </div>
+
+
+    <div class="menu">
+
+        <a href="marketplace.html"
+           class="active">
+
+            📊
+            <span>Marketplace</span>
+
+        </a>
+
+
+        <a href="#">
+
+            📈
+            <span>Portfolio</span>
+
+        </a>
+
+
+        <a href="#">
+
+            💰
+            <span>Investments</span>
+
+        </a>
+
+
+        <a href="#">
+
+            🔔
+            <span>Notifications</span>
+
+        </a>
+
+
+        <div class="menu-title">
+            ACCOUNT
+        </div>
+
+
+        <a href="#">
+
+            👤
+            <span>My Profile</span>
+
+        </a>
+
+
+        <a href="#">
+
+            ⚙️
+            <span>Settings</span>
+
+        </a>
+
+    </div>
+
+
+    <div class="profile">
+
+        <div class="profile-name">
+            Sanchita Finance
+        </div>
+
+        <div class="profile-role">
+            Financier Account
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div>
+
+            <h1>
+                Invoice Marketplace 💰
+            </h1>
+
+            <p>
+                Discover verified invoice opportunities.
+            </p>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <button
+            class="icon-btn"
+            onclick="showToast('You have 3 new notifications 🔔')">
+
+                🔔
+
+            </button>
+
+
+            <div class="avatar">
+                SF
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <h2>
+            Invest in Business Cash Flow 🚀
+        </h2>
+
+        <p>
+            Browse invoices, review risk scores and choose
+            opportunities that match your investment strategy.
+        </p>
+
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+
+                <strong>
+                    ₹12.8L
+                </strong>
+
+                <span>
+                    Available Invoices
+                </span>
+
+            </div>
+
+
+            <div class="hero-stat">
+
+                <strong>
+                    18
+                </strong>
+
+                <span>
+                    Active Opportunities
+                </span>
+
+            </div>
+
+
+            <div class="hero-stat">
+
+                <strong>
+                    87%
+                </strong>
+
+                <span>
+                    Average Risk Score
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FILTER -->
+
+    <div class="filter-bar">
+
+        <input
+        class="search-box"
+        id="search"
+        type="text"
+        placeholder="🔍 Search invoice or buyer...">
+
+
+        <select
+        class="filter-select"
+        id="riskFilter">
+
+            <option value="all">
+                All Risk Levels
+            </option>
+
+            <option value="low">
+                Low Risk
+            </option>
+
+            <option value="medium">
+                Medium Risk
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- MARKETPLACE -->
+
+    <div
+    class="marketplace"
+    id="marketplace">
+
+
+        <!-- CARD 1 -->
+
+        <div
+        class="invoice-card"
+        data-risk="low"
+        data-search="INV-1042 ABC Industries">
+
+            <div class="card-top">
+
+                <div class="invoice-id">
+                    INV-1042
+                </div>
+
+                <span class="status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="amount">
+                ₹1,00,000
+            </div>
+
+            <div class="buyer">
+                ABC Industries Ltd.
+            </div>
+
+
+            <div class="score-row">
+
+                <div class="score-circle">
+                    91
+                </div>
+
+                <div class="score-info">
+
+                    <span>
+                        Cred-Flow Score
+                    </span>
+
+                    <strong>
+                        LOW RISK
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <span>
+                        Due Date
+                    </span>
+
+                    <strong>
+                        15 Oct 2026
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Expected Return
+                    </span>
+
+                    <strong>
+                        ₹5,000
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                class="view-btn"
+                onclick="viewInvoice(
+                'INV-1042',
+                'ABC Industries Ltd.',
+                '₹1,00,000',
+                '15 Oct 2026',
+                '91/100'
+                )">
+
+                    View Details
+
+                </button>
+
+
+                <button
+                class="fund-btn"
+                onclick="fundInvoice(
+                'INV-1042'
+                )">
+
+                    Fund Invoice
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- CARD 2 -->
+
+        <div
+        class="invoice-card"
+        data-risk="low"
+        data-search="INV-1043 Tech Solutions">
+
+            <div class="card-top">
+
+                <div class="invoice-id">
+                    INV-1043
+                </div>
+
+                <span class="status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="amount">
+                ₹75,000
+            </div>
+
+            <div class="buyer">
+                Tech Solutions Ltd.
+            </div>
+
+
+            <div class="score-row">
+
+                <div class="score-circle">
+                    87
+                </div>
+
+                <div class="score-info">
+
+                    <span>
+                        Cred-Flow Score
+                    </span>
+
+                    <strong>
+                        LOW RISK
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <span>
+                        Due Date
+                    </span>
+
+                    <strong>
+                        28 Oct 2026
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Expected Return
+                    </span>
+
+                    <strong>
+                        ₹3,750
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                class="view-btn"
+                onclick="viewInvoice(
+                'INV-1043',
+                'Tech Solutions Ltd.',
+                '₹75,000',
+                '28 Oct 2026',
+                '87/100'
+                )">
+
+                    View Details
+
+                </button>
+
+
+                <button
+                class="fund-btn"
+                onclick="fundInvoice(
+                'INV-1043'
+                )">
+
+                    Fund Invoice
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- CARD 3 -->
+
+        <div
+        class="invoice-card"
+        data-risk="medium"
+        data-search="INV-1044 Global Traders">
+
+            <div class="card-top">
+
+                <div class="invoice-id">
+                    INV-1044
+                </div>
+
+                <span class="status medium">
+                    Review
+                </span>
+
+            </div>
+
+
+            <div class="amount">
+                ₹48,500
+            </div>
+
+            <div class="buyer">
+                Global Traders
+            </div>
+
+
+            <div class="score-row">
+
+                <div class="score-circle">
+                    72
+                </div>
+
+                <div class="score-info">
+
+                    <span>
+                        Cred-Flow Score
+                    </span>
+
+                    <strong style="color:#fbbf24;">
+                        MEDIUM RISK
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <span>
+                        Due Date
+                    </span>
+
+                    <strong>
+                        05 Nov 2026
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Expected Return
+                    </span>
+
+                    <strong>
+                        ₹2,425
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                class="view-btn"
+                onclick="viewInvoice(
+                'INV-1044',
+                'Global Traders',
+                '₹48,500',
+                '05 Nov 2026',
+                '72/100'
+                )">
+
+                    View Details
+
+                </button>
+
+
+                <button
+                class="fund-btn"
+                onclick="fundInvoice(
+                'INV-1044'
+                )">
+
+                    Fund Invoice
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- CARD 4 -->
+
+        <div
+        class="invoice-card"
+        data-risk="low"
+        data-search="INV-1045 Prime Retail">
+
+            <div class="card-top">
+
+                <div class="invoice-id">
+                    INV-1045
+                </div>
+
+                <span class="status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="amount">
+                ₹1,25,000
+            </div>
+
+            <div class="buyer">
+                Prime Retail
+            </div>
+
+
+            <div class="score-row">
+
+                <div class="score-circle">
+                    89
+                </div>
+
+                <div class="score-info">
+
+                    <span>
+                        Cred-Flow Score
+                    </span>
+
+                    <strong>
+                        LOW RISK
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <span>
+                        Due Date
+                    </span>
+
+                    <strong>
+                        20 Nov 2026
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Expected Return
+                    </span>
+
+                    <strong>
+                        ₹6,250
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                class="view-btn"
+                onclick="viewInvoice(
+                'INV-1045',
+                'Prime Retail',
+                '₹1,25,000',
+                '20 Nov 2026',
+                '89/100'
+                )">
+
+                    View Details
+
+                </button>
+
+
+                <button
+                class="fund-btn"
+                onclick="fundInvoice(
+                'INV-1045'
+                )">
+
+                    Fund Invoice
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- CARD 5 -->
+
+        <div
+        class="invoice-card"
+        data-risk="low"
+        data-search="INV-1046 Nova Enterprises">
+
+            <div class="card-top">
+
+                <div class="invoice-id">
+                    INV-1046
+                </div>
+
+                <span class="status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="amount">
+                ₹90,000
+            </div>
+
+            <div class="buyer">
+                Nova Enterprises
+            </div>
+
+
+            <div class="score-row">
+
+                <div class="score-circle">
+                    84
+                </div>
+
+                <div class="score-info">
+
+                    <span>
+                        Cred-Flow Score
+                    </span>
+
+                    <strong>
+                        LOW RISK
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <span>
+                        Due Date
+                    </span>
+
+                    <strong>
+                        30 Nov 2026
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Expected Return
+                    </span>
+
+                    <strong>
+                        ₹4,500
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                class="view-btn"
+                onclick="viewInvoice(
+                'INV-1046',
+                'Nova Enterprises',
+                '₹90,000',
+                '30 Nov 2026',
+                '84/100'
+                )">
+
+                    View Details
+
+                </button>
+
+
+                <button
+                class="fund-btn"
+                onclick="fundInvoice(
+                'INV-1046'
+                )">
+
+                    Fund Invoice
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- CARD 6 -->
+
+        <div
+        class="invoice-card"
+        data-risk="medium"
+        data-search="INV-1047 Metro Supplies">
+
+            <div class="card-top">
+
+                <div class="invoice-id">
+                    INV-1047
+                </div>
+
+                <span class="status medium">
+                    Review
+                </span>
+
+            </div>
+
+
+            <div class="amount">
+                ₹62,000
+            </div>
+
+            <div class="buyer">
+                Metro Supplies
+            </div>
+
+
+            <div class="score-row">
+
+                <div class="score-circle">
+                    69
+                </div>
+
+                <div class="score-info">
+
+                    <span>
+                        Cred-Flow Score
+                    </span>
+
+                    <strong style="color:#fbbf24;">
+                        MEDIUM RISK
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <span>
+                        Due Date
+                    </span>
+
+                    <strong>
+                        10 Dec 2026
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>
+                        Expected Return
+                    </span>
+
+                    <strong>
+                        ₹3,100
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                class="view-btn"
+                onclick="viewInvoice(
+                'INV-1047',
+                'Metro Supplies',
+                '₹62,000',
+                '10 Dec 2026',
+                '69/100'
+                )">
+
+                    View Details
+
+                </button>
+
+
+                <button
+                class="fund-btn"
+                onclick="fundInvoice(
+                'INV-1047'
+                )">
+
+                    Fund Invoice
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ================= MODAL ================= -->
+
+<div
+class="modal"
+id="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                Invoice Details
+            </h2>
+
+            <button
+            class="close"
+            onclick="closeModal()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Invoice Number
+            </span>
+
+            <strong id="mInvoice">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Buyer
+            </span>
+
+            <strong id="mBuyer">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Invoice Amount
+            </span>
+
+            <strong id="mAmount">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Due Date
+            </span>
+
+            <strong id="mDate">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="modal-row">
+
+            <span>
+                Risk Score
+            </span>
+
+            <strong
+            id="mScore"
+            style="color:#4ade80;">
+
+                -
+
+            </strong>
+
+        </div>
+
+
+        <button
+        class="modal-fund"
+        id="modalFund">
+
+            💰 Fund This Invoice
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div
+class="toast"
+id="toast">
+
+    <strong>
+        Success! 
+    </strong>
+
+    <span id="toastMessage"></span>
+
+</div>
+
+
+<script>
+
+/* ================= SEARCH ================= */
+
+const search =
+document.getElementById("search");
+
+const riskFilter =
+document.getElementById("riskFilter");
+
+const cards =
+document.querySelectorAll(".invoice-card");
+
+
+function filterInvoices(){
+
+    const searchText =
+    search.value.toLowerCase();
+
+    const risk =
+    riskFilter.value;
+
+
+    cards.forEach(function(card){
+
+        const text =
+        card.dataset.search.toLowerCase();
+
+        const cardRisk =
+        card.dataset.risk;
+
+
+        const searchMatch =
+        text.includes(searchText);
+
+
+        const riskMatch =
+        risk==="all" ||
+        cardRisk===risk;
+
+
+        if(searchMatch && riskMatch){
+
+            card.style.display="block";
+
+        }else{
+
+            card.style.display="none";
+
+        }
+
+    });
+
+}
+
+
+search.addEventListener(
+    "input",
+    filterInvoices
+);
+
+riskFilter.addEventListener(
+    "change",
+    filterInvoices
+);
+
+
+/* ================= VIEW DETAILS ================= */
+
+function viewInvoice(
+    invoice,
+    buyer,
+    amount,
+    date,
+    score
+){
+
+    document.getElementById(
+        "mInvoice"
+    ).innerText=invoice;
+
+
+    document.getElementById(
+        "mBuyer"
+    ).innerText=buyer;
+
+
+    document.getElementById(
+        "mAmount"
+    ).innerText=amount;
+
+
+    document.getElementById(
+        "mDate"
+    ).innerText=date;
+
+
+    document.getElementById(
+        "mScore"
+    ).innerText=score;
+
+
+    document.getElementById(
+        "modalFund"
+    ).onclick=function(){
+
+        fundInvoice(invoice);
+
+        closeModal();
+
+    };
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add("show");
+
+}
+
+
+/* ================= CLOSE MODAL ================= */
+
+function closeModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove("show");
+
+}
+
+
+/* ================= FUND INVOICE ================= */
+
+function fundInvoice(invoice){
+
+    localStorage.setItem(
+        "fundedInvoice",
+        invoice
+    );
+
+
+    showToast(
+        invoice +
+        " has been funded successfully! 💰"
+    );
+
+
+    setTimeout(function(){
+
+        const allCards =
+        document.querySelectorAll(".invoice-card");
+
+
+        allCards.forEach(function(card){
+
+            if(
+                card.dataset.search
+                .includes(invoice)
+            ){
+
+                const status =
+                card.querySelector(".status");
+
+                status.innerText="Funded";
+
+                status.style.color="#4ade80";
+
+                status.style.background="#22c55e20";
+
+            }
+
+        });
+
+    },500);
+
+}
+
+
+/* ================= TOAST ================= */
+
+function showToast(message){
+
+    const toast =
+    document.getElementById("toast");
+
+    document.getElementById(
+        "toastMessage"
+    ).innerText=message;
+
+
+    toast.classList.add("show");
+
+
+    setTimeout(function(){
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+
+/* ================= CLOSE MODAL OUTSIDE ================= */
+
+document.getElementById("modal")
+.addEventListener("click",function(e){
+
+    if(e.target===this){
+
+        closeModal();
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>

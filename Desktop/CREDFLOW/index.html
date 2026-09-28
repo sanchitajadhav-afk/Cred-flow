@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cred-Flow | Invoice Financing Platform</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f5f7ff;
+            color: #172033;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(99,102,241,0.25), transparent 30%),
+                radial-gradient(circle at 90% 15%, rgba(14,165,233,0.22), transparent 28%),
+                radial-gradient(circle at 80% 90%, rgba(168,85,247,0.20), transparent 30%),
+                linear-gradient(135deg, #eef2ff, #f8fbff);
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: 0.55;
+            z-index: -1;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .orb.one {
+            width: 220px;
+            height: 220px;
+            background: #6366f1;
+            top: 8%;
+            left: -80px;
+        }
+
+        .orb.two {
+            width: 180px;
+            height: 180px;
+            background: #06b6d4;
+            right: -60px;
+            top: 35%;
+            animation-delay: 2s;
+        }
+
+        .orb.three {
+            width: 150px;
+            height: 150px;
+            background: #a855f7;
+            bottom: 5%;
+            left: 35%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-25px);
+            }
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            width: 100%;
+            padding: 20px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #172554;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed, #06b6d4);
+            box-shadow: 0 10px 25px rgba(79,70,229,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        .nav-signup {
+            padding: 11px 20px;
+            border-radius: 12px;
+            color: white !important;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            box-shadow: 0 8px 20px rgba(79,70,229,0.25);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            width: 90%;
+            max-width: 1250px;
+            margin: 35px auto 70px;
+            min-height: 570px;
+
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .hero-content {
+            animation: fadeUp 0.8s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 15px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.75);
+            border: 1px solid rgba(99,102,241,0.15);
+            color: #4f46e5;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(30,41,59,0.06);
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 5vw, 72px);
+            line-height: 1.04;
+            letter-spacing: -3px;
+            color: #111827;
+            margin-bottom: 25px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #4f46e5, #7c3aed, #0891b2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: #64748b;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 15px 23px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            box-shadow: 0 12px 25px rgba(79,70,229,0.28);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 30px rgba(79,70,229,0.35);
+        }
+
+        .btn-secondary {
+            color: #334155;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            border-color: #a5b4fc;
+        }
+
+        /* =========================
+           DASHBOARD PREVIEW
+        ========================= */
+
+        .preview-wrapper {
+            position: relative;
+            animation: fadeUp 1s ease;
+        }
+
+        .dashboard-preview {
+            background: rgba(255,255,255,0.78);
+            border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 28px;
+            padding: 20px;
+            box-shadow: 0 30px 80px rgba(30,41,59,0.16);
+            backdrop-filter: blur(20px);
+            transform: rotate(1deg);
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .preview-title {
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .live {
+            font-size: 11px;
+            padding: 7px 10px;
+            border-radius: 20px;
+            background: #dcfce7;
+            color: #15803d;
+            font-weight: 700;
+        }
+
+        .preview-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .mini-card {
+            padding: 17px;
+            border-radius: 17px;
+            background: linear-gradient(135deg, #eef2ff, #ffffff);
+            border: 1px solid #e0e7ff;
+        }
+
+        .mini-card p {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 7px;
+        }
+
+        .mini-card h3 {
+            font-size: 21px;
+            color: #172033;
+        }
+
+        .chart-card {
+            margin-top: 14px;
+            padding: 18px;
+            border-radius: 18px;
+            background: white;
+            border: 1px solid #e2e8f0;
+        }
+
+        .chart-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .chart-title strong {
+            font-size: 13px;
+        }
+
+        .chart-title span {
+            font-size: 11px;
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .bars {
+            height: 130px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .bar {
+            width: 12%;
+            border-radius: 8px 8px 3px 3px;
+            background: linear-gradient(to top, #4f46e5, #8b5cf6);
+            animation: grow 1.2s ease;
+        }
+
+        .bar:nth-child(1) {
+            height: 55%;
+        }
+
+        .bar:nth-child(2) {
+            height: 70%;
+        }
+
+        .bar:nth-child(3) {
+            height: 48%;
+        }
+
+        .bar:nth-child(4) {
+            height: 85%;
+        }
+
+        .bar:nth-child(5) {
+            height: 68%;
+        }
+
+        .bar:nth-child(6) {
+            height: 92%;
+        }
+
+        @keyframes grow {
+            from {
+                height: 0;
+            }
+        }
+
+        /* Floating cards */
+
+        .floating-card {
+            position: absolute;
+            padding: 14px 17px;
+            background: rgba(255,255,255,0.92);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(30,41,59,0.12);
+            backdrop-filter: blur(15px);
+        }
+
+        .floating-card.score {
+            left: -45px;
+            bottom: 55px;
+        }
+
+        .floating-card.funded {
+            right: -35px;
+            top: 90px;
+        }
+
+        .floating-card small {
+            display: block;
+            font-size: 10px;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .floating-card strong {
+            font-size: 17px;
+            color: #1e293b;
+        }
+
+        /* =========================
+           QUICK NAVIGATION
+        ========================= */
+
+        .quick-section {
+            width: 90%;
+            max-width: 1250px;
+            margin: 0 auto 80px;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-heading h2 {
+            font-size: 32px;
+            color: #172033;
+            margin-bottom: 10px;
+        }
+
+        .section-heading p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+        }
+
+        .quick-card {
+            text-decoration: none;
+            color: inherit;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 23px 18px;
+            transition: 0.3s;
+            box-shadow: 0 12px 30px rgba(30,41,59,0.06);
+        }
+
+        .quick-card:hover {
+            transform: translateY(-7px);
+            border-color: #a5b4fc;
+            box-shadow: 0 20px 40px rgba(79,70,229,0.12);
+        }
+
+        .quick-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 17px;
+            background: #eef2ff;
+        }
+
+        .quick-card h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .quick-card p {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features {
+            width: 90%;
+            max-width: 1250px;
+            margin: 0 auto 80px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            padding: 28px;
+            border-radius: 22px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(30,41,59,0.05);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #eef2ff, #f3e8ff);
+            font-size: 23px;
+            margin-bottom: 18px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 13px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #111827;
+            color: white;
+            padding: 35px 6%;
+            text-align: center;
+        }
+
+        footer h3 {
+            margin-bottom: 8px;
+        }
+
+        footer p {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1050px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 20px;
+            }
+
+            .preview-wrapper {
+                max-width: 700px;
+                width: 100%;
+                margin: auto;
+            }
+
+            .quick-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                padding: 16px 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                width: 90%;
+                margin-top: 20px;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 44px;
+                letter-spacing: -2px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .floating-card {
+                display: none;
+            }
+
+            .quick-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Background -->
+    <div class="background"></div>
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                CF
+            </div>
+
+            <span>Cred-Flow</span>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="sme-dashboard.html">
+                SME Dashboard
+            </a>
+
+            <a href="upload-invoice.html">
+                Upload Invoice
+            </a>
+
+            <a href="invoice-review.html">
+                Invoice Review
+            </a>
+
+            <a href="marketplace.html">
+                Marketplace
+            </a>
+
+            <a href="portfolio.html">
+                Portfolio
+            </a>
+
+            <a href="signup.html" class="nav-signup">
+                Create Account
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="badge">
+                    ⚡ Smart Invoice Financing Platform
+                </div>
+
+                <h1>
+                    Turn Your
+                    <span class="gradient-text">
+                        Invoices
+                    </span>
+                    Into Cash Flow.
+                </h1>
+
+                <p>
+                    Cred-Flow helps SMEs convert unpaid invoices into
+                    faster cash flow while giving financiers access to
+                    structured, risk-scored funding opportunities.
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="sme-dashboard.html"
+                        class="btn btn-primary">
+                        🚀 Open SME Dashboard
+                    </a>
+
+                    <a
+                        href="marketplace.html"
+                        class="btn btn-secondary">
+                        🏪 Explore Marketplace
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Dashboard Preview -->
+
+            <div class="preview-wrapper">
+
+                <div class="dashboard-preview">
+
+                    <div class="preview-header">
+
+                        <div class="preview-title">
+                            Cred-Flow Dashboard
+                        </div>
+
+                        <div class="live">
+                            ● LIVE
+                        </div>
+
+                    </div>
+
+
+                    <div class="preview-stats">
+
+                        <div class="mini-card">
+
+                            <p>
+                                Total Receivables
+                            </p>
+
+                            <h3>
+                                ₹8.42L
+                            </h3>
+
+                        </div>
+
+
+                        <div class="mini-card">
+
+                            <p>
+                                Expected Cash Flow
+                            </p>
+
+                            <h3>
+                                ₹2.45L
+                            </h3>
+
+                        </div>
+
+
+                        <div class="mini-card">
+
+                            <p>
+                                Cred-Flow Score
+                            </p>
+
+                            <h3>
+                                847/900
+                            </h3>
+
+                        </div>
+
+
+                        <div class="mini-card">
+
+                            <p>
+                                Funded Amount
+                            </p>
+
+                            <h3>
+                                ₹4.76L
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-card">
+
+                        <div class="chart-title">
+
+                            <strong>
+                                Cash Flow Forecast
+                            </strong>
+
+                            <span>
+                                +18.6%
+                            </span>
+
+                        </div>
+
+
+                        <div class="bars">
+
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Floating Score Card -->
+
+                <div class="floating-card score">
+
+                    <small>
+                        Cred-Flow Risk Score
+                    </small>
+
+                    <strong>
+                        🟢 847 / 900
+                    </strong>
+
+                </div>
+
+
+                <!-- Floating Funded Card -->
+
+                <div class="floating-card funded">
+
+                    <small>
+                        Invoice Status
+                    </small>
+
+                    <strong>
+                        💰 Funded
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             QUICK NAVIGATION
+        ========================== -->
+
+        <section class="quick-section">
+
+            <div class="section-heading">
+
+                <h2>
+                    Explore Cred-Flow
+                </h2>
+
+                <p>
+                    Access all important areas of your invoice financing platform.
+                </p>
+
+            </div>
+
+
+            <div class="quick-grid">
+
+
+                <!-- SME Dashboard -->
+
+                <a
+                    href="sme-dashboard.html"
+                    class="quick-card">
+
+                    <div class="quick-icon">
+                        🏠
+                    </div>
+
+                    <h3>
+                        SME Dashboard
+                    </h3>
+
+                    <p>
+                        View business performance,
+                        receivables and funding overview.
+                    </p>
+
+                </a>
+
+
+                <!-- Upload Invoice -->
+
+                <a
+                    href="upload-invoice.html"
+                    class="quick-card">
+
+                    <div class="quick-icon">
+                        📤
+                    </div>
+
+                    <h3>
+                        Upload Invoice
+                    </h3>
+
+                    <p>
+                        Upload an invoice and generate
+                        its Cred-Flow risk score.
+                    </p>
+
+                </a>
+
+
+                <!-- Invoice Review -->
+
+                <a
+                    href="invoice-review.html"
+                    class="quick-card">
+
+                    <div class="quick-icon">
+                        🔎
+                    </div>
+
+                    <h3>
+                        Invoice Review
+                    </h3>
+
+                    <p>
+                        Review invoice details,
+                        risk factors and funding information.
+                    </p>
+
+                </a>
+
+
+                <!-- Marketplace -->
+
+                <a
+                    href="marketplace.html"
+                    class="quick-card">
+
+                    <div class="quick-icon">
+                        🏪
+                    </div>
+
+                    <h3>
+                        Marketplace
+                    </h3>
+
+                    <p>
+                        Explore invoice funding
+                        opportunities for financiers.
+                    </p>
+
+                </a>
+
+
+                <!-- Portfolio -->
+
+                <a
+                    href="portfolio.html"
+                    class="quick-card">
+
+                    <div class="quick-icon">
+                        💼
+                    </div>
+
+                    <h3>
+                        Portfolio
+                    </h3>
+
+                    <p>
+                        Track funded invoices,
+                        investments and expected returns.
+                    </p>
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             FEATURES
+        ========================== -->
+
+        <section class="features">
+
+            <div class="section-heading">
+
+                <h2>
+                    Why Cred-Flow?
+                </h2>
+
+                <p>
+                    A simple digital platform for smarter invoice financing.
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Automated Risk Score
+                    </h3>
+
+                    <p>
+                        Cred-Flow generates a transparent score
+                        from invoice strength, payment timeline,
+                        business vintage and repayment history.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        Faster Cash Flow
+                    </h3>
+
+                    <p>
+                        SMEs can identify funding opportunities
+                        for unpaid invoices and improve their
+                        working-capital visibility.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🔐
+                    </div>
+
+                    <h3>
+                        Transparent Information
+                    </h3>
+
+                    <p>
+                        Financiers can review invoice details,
+                        score breakdowns and funding information
+                        before making a simulated funding decision.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <h3>
+            Cred-Flow
+        </h3>
+
+        <p>
+            AI-powered invoice cash-flow and alternative credit scoring platform.
+        </p>
+
+        <p style="margin-top:10px;">
+            © 2026 Cred-Flow. Prototype Project.
+        </p>
+
+    </footer>
+
+
+</body>
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Cred-Flow | SME Dashboard</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Arial,sans-serif;
+}
+
+body{
+    background:
+    radial-gradient(circle at 80% 10%,#7c3aed30,transparent 30%),
+    linear-gradient(135deg,#07111f,#111936);
+    color:white;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100vh;
+    padding:25px 18px;
+    background:#081225eF;
+    border-right:1px solid #ffffff12;
+}
+
+.logo{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:35px;
+}
+
+.logo-icon{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+.menu a{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    text-decoration:none;
+    color:#9da8c1;
+    padding:13px;
+    margin:5px 0;
+    border-radius:12px;
+}
+
+.menu a:hover,
+.menu a.active{
+    background:#7c3aed30;
+    color:white;
+}
+
+.support{
+    position:absolute;
+    bottom:25px;
+    left:18px;
+    right:18px;
+    padding:17px;
+    border-radius:16px;
+    background:#7c3aed22;
+}
+
+.support p{
+    color:#8995b0;
+    font-size:12px;
+    margin:7px 0;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:240px;
+    padding:30px;
+}
+
+/* TOP */
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.search{
+    padding:12px 18px;
+    width:250px;
+    border-radius:12px;
+    border:1px solid #ffffff15;
+    background:#ffffff09;
+    color:white;
+}
+
+/* HERO */
+
+.hero-card{
+    padding:30px;
+    border-radius:22px;
+    background:linear-gradient(135deg,#7c3aed45,#06b6d425);
+    border:1px solid #ffffff15;
+    margin-bottom:25px;
+}
+
+.hero-card p{
+    color:#b8c1d5;
+    margin:8px 0 20px;
+}
+
+.upload-btn{
+    padding:13px 20px;
+    border:0;
+    border-radius:11px;
+    color:white;
+    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+    cursor:pointer;
+    font-weight:bold;
+}
+
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    padding:22px;
+    border-radius:18px;
+    background:#ffffff08;
+    border:1px solid #ffffff12;
+}
+
+.stat-card p{
+    color:#8995b0;
+    font-size:13px;
+}
+
+.stat-card h2{
+    margin-top:10px;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+}
+
+/* CARD */
+
+.card{
+    padding:25px;
+    border-radius:20px;
+    background:#ffffff08;
+    border:1px solid #ffffff12;
+}
+
+.card h2{
+    margin-bottom:20px;
+}
+
+/* CHART */
+
+.chart{
+    height:220px;
+    display:flex;
+    align-items:end;
+    justify-content:space-around;
+    gap:15px;
+    padding-top:20px;
+}
+
+.bar-box{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+    align-items:center;
+    gap:8px;
+}
+
+.bar{
+    width:35px;
+    border-radius:8px 8px 0 0;
+    background:linear-gradient(to top,#7c3aed,#06b6d4);
+    transition:.5s;
+}
+
+.bar:hover{
+    transform:scaleY(1.05);
+    filter:brightness(1.3);
+}
+
+.bar-box span{
+    font-size:11px;
+    color:#8995b0;
+}
+
+/* SCORE */
+
+.score{
+    text-align:center;
+}
+
+.circle{
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    margin:20px auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    background:
+    radial-gradient(circle,#101a32 58%,transparent 59%),
+    conic-gradient(#8b5cf6 0 310deg,#ffffff12 310deg);
+}
+
+.circle strong{
+    font-size:40px;
+}
+
+.low{
+    display:inline-block;
+    padding:7px 15px;
+    border-radius:30px;
+    background:#22c55e20;
+    color:#4ade80;
+}
+
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:14px 10px;
+    text-align:left;
+    border-bottom:1px solid #ffffff0d;
+    font-size:13px;
+}
+
+th{
+    color:#7f8aa5;
+}
+
+.status{
+    padding:5px 9px;
+    border-radius:20px;
+    background:#22c55e20;
+    color:#4ade80;
+}
+
+.status.pending{
+    background:#f59e0b20;
+    color:#fbbf24;
+}
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    table{
+        font-size:11px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">₹</div>
+
+        Cred<span>-Flow</span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <a class="active" href="sme-dashboard.html">
+            📊 Dashboard
+        </a>
+
+        <a href="upload-invoice.html">
+            📤 Upload Invoice
+        </a>
+
+        <a href="#">
+            🧾 My Invoices
+        </a>
+
+        <a href="#">
+            📈 Cash Flow
+        </a>
+
+        <a href="#">
+            🔔 Notifications
+        </a>
+
+        <a href="#">
+            👤 My Profile
+        </a>
+
+        <a href="#">
+            ⚙️ Settings
+        </a>
+
+    </div>
+
+
+    <div class="support">
+
+        <b>Need Help?</b>
+
+        <p>
+            Contact our support team.
+        </p>
+
+        <button
+        onclick="alert('Support team contacted!')">
+            Contact Support
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+    <div class="top">
+
+        <div>
+
+            <h1>
+                Good Evening, Sanchita 👋
+            </h1>
+
+            <p style="color:#8995b0;margin-top:5px;">
+                Here's what's happening with your business.
+            </p>
+
+        </div>
+
+
+        <input
+        class="search"
+        placeholder="🔍 Search invoices...">
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <div class="hero-card">
+
+        <h2>
+            Your business is looking strong! 🚀
+        </h2>
+
+        <p>
+            You have ₹2.45L in expected incoming payments.
+        </p>
+
+        <button
+        class="upload-btn"
+        onclick="window.location.href='upload-invoice.html'">
+
+            📤 Upload New Invoice
+
+        </button>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <p>Total Invoices</p>
+
+            <h2>24</h2>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <p>Total Receivables</p>
+
+            <h2>₹8.42L</h2>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <p>Pending Amount</p>
+
+            <h2>₹2.18L</h2>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <p>Funded Amount</p>
+
+            <h2>₹4.76L</h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- GRID -->
+
+    <div class="grid">
+
+
+        <!-- CHART -->
+
+        <div class="card">
+
+            <h2>
+                📈 Cash Flow Forecast
+            </h2>
+
+            <div class="chart">
+
+                <div class="bar-box">
+                    <div class="bar" style="height:80px;"></div>
+                    <span>Oct</span>
+                </div>
+
+                <div class="bar-box">
+                    <div class="bar" style="height:115px;"></div>
+                    <span>Nov</span>
+                </div>
+
+                <div class="bar-box">
+                    <div class="bar" style="height:100px;"></div>
+                    <span>Dec</span>
+                </div>
+
+                <div class="bar-box">
+                    <div class="bar" style="height:145px;"></div>
+                    <span>Jan</span>
+                </div>
+                <div class="logo-icon">
+    <img src="images/logo.png" alt="Cred-Flow Logo">
+</div>
+
+                <div class="bar-box">
+                    <div class="bar" style="height:125px;"></div>
+                    <span>Feb</span>
+                </div>
+
+                <div class="bar-box">
+                    <div class="bar" style="height:175px;"></div>
+                    <span>Mar</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SCORE -->
+
+        <div class="card score">
+
+            <h2>
+                🎯 Cred-Flow Risk Score
+            </h2>
+
+            <div class="circle">
+
+                <strong id="score">
+                    847
+                </strong>
+
+                <small>
+                    / 900
+                </small>
+
+            </div>
+
+            <span class="low">
+                LOW RISK
+            </span>
+
+            <br><br>
+
+            <button
+            class="upload-btn"
+            onclick="alert(
+            'Invoice Amount: 20%\\nPayment Timeline: 20%\\nBusiness Vintage: 25%\\nRepayment History: 35%'
+            )">
+
+                View Score Breakdown
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <!-- INVOICES -->
+
+    <div class="card">
+
+        <h2>
+            🧾 Recent Invoices
+        </h2>
+
+
+        <table>
+
+            <tr>
+
+                <th>Invoice</th>
+                <th>Buyer</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Risk</th>
+                <th>Status</th>
+
+            </tr>
+
+
+            <tr>
+
+                <td>INV-1042</td>
+
+                <td>ABC Industries</td>
+
+                <td>₹1,00,000</td>
+
+                <td>15 Oct 2026</td>
+
+                <td>91/100</td>
+
+                <td>
+                    <span class="status">
+                        Funded
+                    </span>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>INV-1043</td>
+
+                <td>Tech Solutions</td>
+
+                <td>₹75,000</td>
+
+                <td>28 Oct 2026</td>
+
+                <td>87/100</td>
+
+                <td>
+                    <span class="status pending">
+                        Under Review
+                    </span>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>INV-1044</td>
+
+                <td>Global Traders</td>
+
+                <td>₹48,500</td>
+
+                <td>05 Nov 2026</td>
+
+                <td>72/100</td>
+
+                <td>
+                    <span class="status pending">
+                        Pending
+                    </span>
+                </td>
+
+            </tr>
+
+
+        </table>
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

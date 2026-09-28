@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Cred-Flow | Upload Invoice</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    color:white;
+    background:
+    radial-gradient(circle at 10% 20%,#7c3aed45,transparent 30%),
+    radial-gradient(circle at 90% 80%,#06b6d435,transparent 30%),
+    linear-gradient(135deg,#07111f,#111a35,#15102d);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100vh;
+    padding:25px 18px;
+    background:#081225ed;
+    border-right:1px solid #ffffff12;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:35px;
+}
+
+.logo-icon{
+    width:42px;
+    height:42px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:12px;
+    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+.menu a{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    padding:13px;
+    margin:5px 0;
+    border-radius:12px;
+    color:#9da8c1;
+    text-decoration:none;
+}
+
+.menu a:hover,
+.menu a.active{
+    color:white;
+    background:#7c3aed30;
+}
+
+.support{
+    position:absolute;
+    bottom:25px;
+    left:18px;
+    right:18px;
+    padding:17px;
+    border-radius:16px;
+    background:#7c3aed22;
+}
+
+.support p{
+    color:#8995b0;
+    font-size:12px;
+    margin:7px 0;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:240px;
+    padding:30px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.top p{
+    color:#8995b0;
+    margin-top:5px;
+}
+
+.back{
+    padding:11px 17px;
+    border:0;
+    border-radius:10px;
+    background:#ffffff10;
+    color:white;
+    cursor:pointer;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:25px;
+}
+
+/* CARD */
+
+.card{
+    padding:28px;
+    border-radius:23px;
+    background:#ffffff09;
+    border:1px solid #ffffff15;
+    backdrop-filter:blur(18px);
+}
+
+.card-title{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.icon{
+    width:43px;
+    height:43px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+}
+
+.card-title p{
+    color:#8995b0;
+    font-size:12px;
+    margin-top:3px;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    color:#c4cbe0;
+    margin-bottom:8px;
+}
+
+input,
+select{
+    width:100%;
+    padding:14px;
+    border-radius:11px;
+    border:1px solid #ffffff15;
+    background:#00000025;
+    color:white;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border-color:#8b5cf6;
+    box-shadow:0 0 0 3px #7c3aed20;
+}
+
+select option{
+    background:#151b32;
+}
+
+.amount{
+    position:relative;
+}
+
+.amount span{
+    position:absolute;
+    left:14px;
+    top:14px;
+    color:#8b5cf6;
+    font-weight:bold;
+}
+
+.amount input{
+    padding-left:32px;
+}
+
+/* BUTTON */
+
+.submit{
+    width:100%;
+    padding:15px;
+    margin-top:25px;
+    border:0;
+    border-radius:12px;
+    color:white;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer;
+    background:linear-gradient(135deg,#7c3aed,#06b6d4);
+    transition:.3s;
+}
+
+.submit:hover{
+    transform:translateY(-3px);
+}
+
+/* SCORE */
+
+.score-card{
+    text-align:center;
+}
+
+.score-card>p{
+    color:#8995b0;
+    font-size:13px;
+}
+
+.score-circle{
+    width:190px;
+    height:190px;
+    border-radius:50%;
+    margin:30px auto 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    radial-gradient(circle,#141c34 58%,transparent 59%),
+    conic-gradient(#8b5cf6 0deg,#06b6d4 280deg,#ffffff10 280deg);
+
+    box-shadow:0 0 35px #7c3aed40;
+}
+
+.score-number{
+    font-size:43px;
+    font-weight:800;
+}
+
+.score-max{
+    color:#8995b0;
+    font-size:12px;
+}
+
+.risk{
+    display:inline-block;
+    padding:8px 17px;
+    border-radius:30px;
+    background:#22c55e20;
+    color:#4ade80;
+    font-weight:bold;
+}
+
+/* FACTORS */
+
+.factor{
+    margin-top:20px;
+    text-align:left;
+}
+
+.factor-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.factor-top span:last-child{
+    color:#b9c2d8;
+}
+
+.progress{
+    height:8px;
+    background:#ffffff10;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    width:0;
+    border-radius:20px;
+    background:linear-gradient(90deg,#7c3aed,#06b6d4);
+    transition:.5s;
+}
+
+/* INFO */
+
+.info{
+    margin-top:20px;
+    padding:15px;
+    border-radius:13px;
+    background:#06b6d410;
+    border:1px solid #06b6d420;
+    color:#aebbd3;
+    font-size:12px;
+    line-height:1.6;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    padding:16px 20px;
+    border-radius:13px;
+    background:#17213a;
+    border:1px solid #ffffff15;
+    box-shadow:0 15px 40px #00000055;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.4s;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+.toast strong{
+    color:#4ade80;
+}
+
+@media(max-width:950px){
+
+    .sidebar{
+        width:75px;
+    }
+
+    .logo span,
+    .menu span,
+    .support{
+        display:none;
+    }
+
+    .main{
+        margin-left:75px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">₹</div>
+
+        Cred<span>-Flow</span>
+
+    </div>
+
+
+    <div class="menu">
+
+        <a href="sme-dashboard.html">
+            📊 Dashboard
+        </a>
+
+        <a href="upload-invoice.html"
+           class="active">
+            📤 Upload Invoice
+        </a>
+
+        <a href="#">
+            🧾 My Invoices
+        </a>
+
+        <a href="#">
+            📈 Cash Flow
+        </a>
+
+        <a href="#">
+            🔔 Notifications
+        </a>
+
+        <a href="#">
+            👤 My Profile
+        </a>
+
+        <a href="#">
+            ⚙️ Settings
+        </a>
+
+    </div>
+
+
+    <div class="support">
+
+        <b>Need Help?</b>
+
+        <p>
+            Our support team is here to help.
+        </p>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+    <div class="top">
+
+        <div>
+
+            <h1>
+                Upload New Invoice 📤
+            </h1>
+
+            <p>
+                Add invoice details and get an instant risk assessment.
+            </p>
+
+        </div>
+
+
+        <button
+        class="back"
+        onclick="window.location.href='sme-dashboard.html'">
+
+            ← Dashboard
+
+        </button>
+
+    </div>
+
+
+    <div class="grid">
+
+
+        <!-- FORM -->
+
+        <section class="card">
+
+            <div class="card-title">
+
+                <div class="icon">
+                    🧾
+                </div>
+
+                <div>
+
+                    <h2>
+                        Invoice Information
+                    </h2>
+
+                    <p>
+                        Enter your unpaid invoice details.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form id="invoiceForm">
+
+
+                <div class="form-grid">
+
+
+                    <div>
+
+                        <label>
+                            Invoice Number
+                        </label>
+
+                        <input
+                        id="invoiceNumber"
+                        type="text"
+                        placeholder="INV-1046"
+                        required>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Invoice Amount
+                        </label>
+
+                        <div class="amount">
+
+                            <span>₹</span>
+
+                            <input
+                            id="amount"
+                            type="number"
+                            placeholder="100000"
+                            min="1000"
+                            required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="full">
+
+                        <label>
+                            Buyer / Customer Name
+                        </label>
+
+                        <input
+                        id="buyer"
+                        type="text"
+                        placeholder="ABC Industries Ltd."
+                        required>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Invoice Issue Date
+                        </label>
+
+                        <input
+                        id="issueDate"
+                        type="date"
+                        required>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Payment Due Date
+                        </label>
+
+                        <input
+                        id="dueDate"
+                        type="date"
+                        required>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Business Vintage
+                        </label>
+
+                        <select id="vintage" required>
+
+                            <option value="">
+                                Select years
+                            </option>
+
+                            <option value="1">
+                                Less than 1 year
+                            </option>
+
+                            <option value="2">
+                                1 - 3 years
+                            </option>
+
+                            <option value="4">
+                                3 - 5 years
+                            </option>
+
+                            <option value="6">
+                                5 - 10 years
+                            </option>
+
+                            <option value="10">
+                                10+ years
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Repayment History
+                        </label>
+
+                        <select id="repayment" required>
+
+                            <option value="">
+                                Select history
+                            </option>
+
+                            <option value="excellent">
+                                Excellent
+                            </option>
+
+                            <option value="good">
+                                Good
+                            </option>
+
+                            <option value="average">
+                                Average
+                            </option>
+
+                            <option value="poor">
+                                Poor
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="info">
+
+                    💡 <b>How Cred-Flow works:</b><br>
+
+                    The demo calculates a rules-based score using
+                    invoice amount, payment timeline, business vintage
+                    and repayment history.
+
+                </div>
+
+
+                <button
+                class="submit"
+                type="submit">
+
+                    🚀 Analyze & List Invoice
+
+                </button>
+
+
+            </form>
+
+        </section>
+
+
+        <!-- SCORE -->
+
+        <section class="card score-card">
+
+            <h2>
+                🎯 Cred-Flow Risk Score
+            </h2>
+
+            <p>
+                Your score updates automatically.
+            </p>
+
+
+            <div class="score-circle">
+
+                <div
+                class="score-number"
+                id="score">
+
+                    300
+
+                </div>
+
+                <div class="score-max">
+                    out of 900
+                </div>
+
+            </div>
+
+
+            <div
+            class="risk"
+            id="risk">
+
+                SCORE PENDING
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-top">
+
+                    <span>
+                        💰 Invoice Strength
+                    </span>
+
+                    <span id="amountValue">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                    class="progress-bar"
+                    id="amountBar">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-top">
+
+                    <span>
+                        📅 Payment Timeline
+                    </span>
+
+                    <span id="dateValue">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                    class="progress-bar"
+                    id="dateBar">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-top">
+
+                    <span>
+                        🏢 Business Vintage
+                    </span>
+
+                    <span id="vintageValue">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                    class="progress-bar"
+                    id="vintageBar">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-top">
+
+                    <span>
+                        💳 Repayment History
+                    </span>
+
+                    <span id="repaymentValue">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                    class="progress-bar"
+                    id="repaymentBar">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<div class="toast" id="toast">
+
+    <strong>Success! </strong>
+
+    <span id="toastMessage"></span>
+
+</div>
+
+
+<script>
+
+/* ELEMENTS */
+
+const amount =
+document.getElementById("amount");
+
+const dueDate =
+document.getElementById("dueDate");
+
+const vintage =
+document.getElementById("vintage");
+
+const repayment =
+document.getElementById("repayment");
+
+const score =
+document.getElementById("score");
+
+const risk =
+document.getElementById("risk");
+
+
+/* CALCULATE SCORE */
+
+function calculateScore(){
+
+    let amountScore=0;
+    let dateScore=0;
+    let vintageScore=0;
+    let repaymentScore=0;
+
+
+    /* AMOUNT */
+
+    let a=Number(amount.value);
+
+    if(a>=250000)
+        amountScore=100;
+
+    else if(a>=100000)
+        amountScore=90;
+
+    else if(a>=50000)
+        amountScore=80;
+
+    else if(a>=10000)
+        amountScore=70;
+
+    else if(a>0)
+        amountScore=60;
+
+
+    /* DATE */
+
+    if(dueDate.value){
+
+        const today=new Date();
+
+        const due=new Date(dueDate.value);
+
+        const days=
+        (due-today)/(1000*60*60*24);
+
+
+        if(days>=90)
+            dateScore=65;
+
+        else if(days>=60)
+            dateScore=75;
+
+        else if(days>=30)
+            dateScore=90;
+
+        else if(days>=0)
+            dateScore=70;
+
+        else
+            dateScore=30;
+    }
+
+
+    /* VINTAGE */
+
+    let v=Number(vintage.value);
+
+    if(v>=10)
+        vintageScore=100;
+
+    else if(v>=6)
+        vintageScore=90;
+
+    else if(v>=4)
+        vintageScore=80;
+
+    else if(v>=2)
+        vintageScore=70;
+
+    else if(v===1)
+        vintageScore=55;
+
+
+    /* REPAYMENT */
+
+    if(repayment.value==="excellent")
+        repaymentScore=100;
+
+    else if(repayment.value==="good")
+        repaymentScore=85;
+
+    else if(repayment.value==="average")
+        repaymentScore=70;
+
+    else if(repayment.value==="poor")
+        repaymentScore=45;
+
+
+    /* WEIGHTED SCORE */
+
+    const total=
+    amountScore*.20+
+    dateScore*.20+
+    vintageScore*.25+
+    repaymentScore*.35;
+
+
+    let finalScore=
+    Math.round(300+(total/100)*600);
+
+
+    if(
+        amountScore===0 ||
+        dateScore===0 ||
+        vintageScore===0 ||
+        repaymentScore===0
+    ){
+
+        score.innerText=300;
+
+        risk.innerText="SCORE PENDING";
+
+    }
+
+    else{
+
+        score.innerText=finalScore;
+
+
+        if(finalScore>=800)
+            risk.innerText="LOW RISK";
+
+        else if(finalScore>=650)
+            risk.innerText="MEDIUM RISK";
+
+        else
+            risk.innerText="HIGH RISK";
+
+    }
+
+
+    /* BARS */
+
+    document.getElementById("amountValue")
+    .innerText=amountScore+"%";
+
+    document.getElementById("dateValue")
+    .innerText=dateScore+"%";
+
+    document.getElementById("vintageValue")
+    .innerText=vintageScore+"%";
+
+    document.getElementById("repaymentValue")
+    .innerText=repaymentScore+"%";
+
+
+    document.getElementById("amountBar")
+    .style.width=amountScore+"%";
+
+    document.getElementById("dateBar")
+    .style.width=dateScore+"%";
+
+    document.getElementById("vintageBar")
+    .style.width=vintageScore+"%";
+
+    document.getElementById("repaymentBar")
+    .style.width=repaymentScore+"%";
+
+
+    return finalScore;
+
+}
+
+
+/* LIVE UPDATE */
+
+amount.addEventListener("input",calculateScore);
+
+dueDate.addEventListener("change",calculateScore);
+
+vintage.addEventListener("change",calculateScore);
+
+repayment.addEventListener("change",calculateScore);
+
+
+/* SUBMIT */
+
+document.getElementById("invoiceForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+
+    const finalScore=
+    calculateScore();
+
+
+    const invoice={
+
+        invoiceNumber:
+        document.getElementById("invoiceNumber").value,
+
+        amount:
+        amount.value,
+
+        buyer:
+        document.getElementById("buyer").value,
+
+        dueDate:
+        dueDate.value,
+
+        score:
+        finalScore,
+
+        status:
+        "Under Review"
+
+    };
+
+
+    localStorage.setItem(
+        "latestInvoice",
+        JSON.stringify(invoice)
+    );
+
+
+    showToast(
+        "Invoice analyzed successfully!"
+    );
+
+
+    setTimeout(function(){
+
+        window.location.href=
+        "sme-dashboard.html";
+
+    },1800);
+
+});
+
+
+/* TOAST */
+
+function showToast(message){
+
+    const toast=
+    document.getElementById("toast");
+
+    document.getElementById("toastMessage")
+    .innerText=message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(function(){
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+</script>
+
+</body>
+
+</html>
